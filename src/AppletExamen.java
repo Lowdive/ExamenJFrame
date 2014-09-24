@@ -405,15 +405,21 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
         lnkCorredores.clear();
         lnkCaminadores.clear();
                 BufferedReader fileIn;
+                boolean bNoFileFound;
                 try {
                         fileIn = new BufferedReader(new FileReader("datos.txt"));
+                        bNoFileFound=false;
                 } catch (FileNotFoundException e){
-                        File puntos = new File("datos.txt");
-                        PrintWriter fileOut = new PrintWriter(puntos);
-                        fileOut.println("1,1");
-                        fileOut.close();
-                        fileIn = new BufferedReader(new FileReader("datos.txt"));
+//                        File puntos = new File("datos.txt");
+//                        PrintWriter fileOut = new PrintWriter(puntos);
+//                        fileOut.println("1,1");
+//                        fileOut.close();
+//                        fileIn = new BufferedReader(new FileReader("datos.txt"));
+                    bNoFileFound=true;
+                    init();
                 }
+                if (!bNoFileFound) {
+                fileIn = new BufferedReader(new FileReader("datos.txt"));
                 String dato = fileIn.readLine();
                 while(dato != null) {  
          int iCorredores = Integer.parseInt(dato);
@@ -452,6 +458,7 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
           iVidas = (Integer.parseInt(fileIn.readLine()));
                 }
                 fileIn.close();
+                }
         }
     @Override
     public void keyTyped(KeyEvent ke) {
