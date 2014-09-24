@@ -33,6 +33,8 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
     private int iColisionesNena;
     private SoundClip scSonidoColisionCorredor;     // Objeto SoundClip sonido Corredor
     private SoundClip scSonidoColisionCaminador; //Objeto SoundClip sonido Caminador
+    private Image paused;    //Imagen al pausar el juego.
+    private boolean bPausado;    //Boleano para pausar el juego.
     
     
     //Constructor de AppletExamen
@@ -52,6 +54,7 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
         setSize(800, 600);
         
         // introducir instrucciones para iniciar juego
+        bPausado = false; //Booleana para pausar
         
         //Inicializamos las vidas al azar entre 3 y 5
         iVidas = (int) (Math.random() * (6 - 3) + 3);
@@ -156,10 +159,12 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
             /* mientras dure el juego, se actualizan posiciones de jugadores
                se checa si hubo colisiones para desaparecer jugadores o corregir
                movimientos y se vuelve a pintar todo
-            */ 
-            actualiza();
-            checaColision();
-            repaint();
+            */
+            if (!bPausado) {
+                actualiza();
+                checaColision();
+                repaint();
+            }
             try	{
                 // El thread se duerme.
                 Thread.sleep (20);
@@ -346,16 +351,20 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
         g.drawString("Quedan " + iVidas + " vidas!", 50, 50);
         g.drawString("Score : " + iScore, 50, 30);
         }
+//        if (bPausado) {
+//            g.drawImage(paused, (((WIDTH/2)) - paused.getWidth(this)/2),
+//            (((HEIGHT/2)) - paused.getHeight(this)/2), this);
+//        }
     }
 
     @Override
     public void keyTyped(KeyEvent ke) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void keyPressed(KeyEvent ke) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -375,6 +384,11 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
         // si presiono flecha para arriba
         if(keyEvent.getKeyCode() == KeyEvent.VK_A) {    
                 iDireccionNena = 4;   // cambio la dirección hacia arriba
+        }
+        //Si presionan P booleano Pausa cambia de estado.
+        if (keyEvent.getKeyCode() == KeyEvent.VK_P) {
+           
+            bPausado = !bPausado; //Click a P pausa o despausa el juego
         }
     }
 }
