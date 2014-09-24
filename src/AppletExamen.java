@@ -192,13 +192,13 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
                 break;
         }
         //Actualiza el movimiento de los caminadores
-        for ( Object lnkCaminadores : lnkCaminadores ) {
-        Personaje perCaminador = (Personaje)lnkCaminadores;
+        for ( Object lnkCaminadore : lnkCaminadores ) {
+        Personaje perCaminador = (Personaje)lnkCaminadore;
         perCaminador.derecha();
         }
         //Actualiza el movimiento de los corredores
-        for ( Object lnkCorredores : lnkCorredores ) {
-        Personaje perCorredor = (Personaje)lnkCorredores;
+        for ( Object lnkCorredore : lnkCorredores ) {
+        Personaje perCorredor = (Personaje)lnkCorredore;
         perCorredor.setVelocidad(6 - iVidas);
         perCorredor.abajo();
         }
@@ -232,8 +232,8 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
             perNena.setX(0);
         }
         //Checa colisiones de los caminadores
-        for ( Object lnkCaminadores : lnkCaminadores ) {
-            Personaje perCaminador = (Personaje)lnkCaminadores;
+        for ( Object lnkCaminadore : lnkCaminadores ) {
+            Personaje perCaminador = (Personaje)lnkCaminadore;
             if (perCaminador.getX() + perCaminador.getAncho() >= getWidth()) {
                 perCaminador.setX(0 - perCaminador.getAncho());
                 perCaminador.setY((int) (Math.random() * (getHeight() - perCaminador.getAlto())));
@@ -248,8 +248,8 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
             }
             }
         //Checa colisiones de los corredores
-        for ( Object lnkCorredores : lnkCorredores ) {
-            Personaje perCorredor = (Personaje)lnkCorredores;
+        for ( Object lnkCorredore : lnkCorredores ) {
+            Personaje perCorredor = (Personaje)lnkCorredore;
             if (perCorredor.getY() + perCorredor.getAlto() >= getWidth()) {
                 perCorredor.setX((int) (Math.random() * (getHeight() - perCorredor.getAncho())));
                 perCorredor.setY(0 - perCorredor.getAlto());
@@ -314,15 +314,15 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
         perNena.getY(), this);
         
         //Dibuja la imagen de los caminadores en la posicion actualizada
-        for ( Object lnkCaminadores : lnkCaminadores ) {
-        Personaje perCaminador = (Personaje)lnkCaminadores;
+        for ( Object lnkCaminadore : lnkCaminadores ) {
+        Personaje perCaminador = (Personaje)lnkCaminadore;
         g.drawImage(perCaminador.getImagen(), perCaminador.getX(),
         perCaminador.getY(), this);
         }
         
         //Dibuja la imagen de los corredores en la posicion actualizada
-        for ( Object lnkCorredores : lnkCorredores ) {
-        Personaje perCorredor = (Personaje)lnkCorredores;
+        for ( Object lnkCorredore : lnkCorredores ) {
+        Personaje perCorredor = (Personaje)lnkCorredore;
         g.drawImage(perCorredor.getImagen(), perCorredor.getX(),
         perCorredor.getY(), this);
         }
