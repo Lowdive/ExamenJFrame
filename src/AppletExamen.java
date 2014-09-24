@@ -50,6 +50,8 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
     private SoundClip scSonidoColisionCaminador; //Objeto SoundClip sonido Caminador
     private Image paused;    //Imagen al pausar el juego.
     private boolean bPausado;    //Boleano para pausar el juego.
+    private URL urlImagenCaminador = this.getClass().getResource("alien1Camina.gif");
+    private URL urlImagenCorredor = this.getClass().getResource("alien2Corre.gif");
     
     
     //Constructor de AppletExamen
@@ -96,8 +98,7 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
         // se posiciona a Susy en alguna parte al azar del cuadrante 
         // superior izquierdo
 	int posX;
-        int posY;   
-	URL urlImagenCaminador = this.getClass().getResource("alien1Camina.gif");
+        int posY;
         
         lnkCaminadores = new LinkedList();
         
@@ -115,8 +116,6 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
             perCaminador.setVelocidad((int) (Math.random() * (5 - 3) + 3));
             lnkCaminadores.add(perCaminador);
             }
-        
-        URL urlImagenCorredor = this.getClass().getResource("alien2Corre.gif");
         
         lnkCorredores = new LinkedList();
         
@@ -374,14 +373,15 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
     
     public void grabaArchivo() throws IOException{
         PrintWriter fileOut = new PrintWriter(new FileWriter("datos.txt"));
-       
+        
+        fileOut.println(lnkCorredores.size());
          for (Object lnkCorre1 : lnkCorredores) {
             Personaje perCorre = (Personaje) lnkCorre1;
             fileOut.println(perCorre.getX());
             fileOut.println(perCorre.getY());
             fileOut.println(perCorre.getVelocidad());
         }
-         
+        fileOut.println(lnkCaminadores.size());
           for (Object lnkCamina1 : lnkCaminadores) {
             Personaje perCamina = (Personaje) lnkCamina1;
             fileOut.println(perCamina.getX());
@@ -400,6 +400,56 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
         fileOut.close();
         
     }
+    
+    public void leeArchivo() throws IOException {
+        lnkCorredores.clear();
+        lnkCaminadores.clear();
+                BufferedReader fileIn;
+                try {
+                        fileIn = new BufferedReader(new FileReader("datos.txt"));
+                } catch (FileNotFoundException e){
+                        File puntos = new File("datos.txt");
+                        PrintWriter fileOut = new PrintWriter(puntos);
+                        fileOut.println("1,1");
+                        fileOut.close();
+                        fileIn = new BufferedReader(new FileReader("datos.txt"));
+                }
+                String dato = fileIn.readLine();
+                while(dato != null) {  
+         
+         int iCorredores = Integer.parseInt(fileIn.readLine());
+         for (int iK=1; iK <= iCorredores; iK++) {
+            // se crea el personaje caminador
+            Personaje perCorre;
+            perCorre = new Personaje(0,0,
+                Toolkit.getDefaultToolkit().getImage(urlImagenCorredor));
+            perCorre.setX(Integer.parseInt(fileIn.readLine()));
+            perCorre.setY(Integer.parseInt(fileIn.readLine()));
+            perCorre.setVelocidad(Integer.parseInt(fileIn.readLine()));
+            lnkCorredores.add(perCorre);
+            }
+         
+         
+         int iCaminadores = Integer.parseInt(fileIn.readLine());
+         for (int iK=1; iK <= iCaminadores; iK++) {
+            // se crea el personaje caminador
+            Personaje perCamina;
+            perCamina = new Personaje(0,0,
+                Toolkit.getDefaultToolkit().getImage(urlImagenCaminador));
+            perCamina.setX(Integer.parseInt(fileIn.readLine()));
+            perCamina.setY(Integer.parseInt(fileIn.readLine()));
+            perCamina.setVelocidad(Integer.parseInt(fileIn.readLine()));
+            lnkCaminadores.add(perCamina);
+            }
+          
+        perNena.setX(Integer.parseInt(fileIn.readLine()));
+        perNena.setY(Integer.parseInt(fileIn.readLine()));
+          iDireccionNena = (Integer.parseInt(fileIn.readLine()));
+          iScore = (Integer.parseInt(fileIn.readLine()));
+          iVidas = (Integer.parseInt(fileIn.readLine()));
+                }
+                fileIn.close();
+        }
 
     @Override
     public void keyTyped(KeyEvent ke) {
@@ -437,7 +487,11 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
         
         if (keyEvent.getKeyCode() == KeyEvent.VK_C) {
            
-            bPausado = !bPausado; //Carga datos
+            try {
+                leeArchivo(); //Carga datos
+            } catch (IOException ex) {
+                Logger.getLogger(AppletExamen.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
         if (keyEvent.getKeyCode() == KeyEvent.VK_G) {
