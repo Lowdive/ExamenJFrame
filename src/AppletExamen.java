@@ -11,12 +11,27 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Toolkit;
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.net.URL;
-import java.util.LinkedList;
+import java.awt.Toolkit;
+import java.awt.Font;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import java.net.URL;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
+import java.awt.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AppletExamen extends JFrame implements Runnable, KeyListener {
 
@@ -356,6 +371,35 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
 //            (((HEIGHT/2)) - paused.getHeight(this)/2), this);
 //        }
     }
+    
+    public void grabaArchivo() throws IOException{
+        PrintWriter fileOut = new PrintWriter(new FileWriter("datos.txt"));
+       
+         for (Object lnkCorre1 : lnkCorredores) {
+            Personaje perCorre = (Personaje) lnkCorre1;
+            fileOut.println(perCorre.getX());
+            fileOut.println(perCorre.getY());
+            fileOut.println(perCorre.getVelocidad());
+        }
+         
+          for (Object lnkCamina1 : lnkCaminadores) {
+            Personaje perCamina = (Personaje) lnkCamina1;
+            fileOut.println(perCamina.getX());
+            fileOut.println(perCamina.getY());
+            fileOut.println(perCamina.getVelocidad());
+        }
+          
+          fileOut.println(perNena.getX());
+          fileOut.println(perNena.getY());
+          fileOut.println(iDireccionNena);
+          fileOut.println(iScore);
+          fileOut.println(iVidas);
+          
+          
+                  
+        fileOut.close();
+        
+    }
 
     @Override
     public void keyTyped(KeyEvent ke) {
@@ -389,6 +433,21 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
         if (keyEvent.getKeyCode() == KeyEvent.VK_P) {
            
             bPausado = !bPausado; //Click a P pausa o despausa el juego
+        }
+        
+        if (keyEvent.getKeyCode() == KeyEvent.VK_C) {
+           
+            bPausado = !bPausado; //Carga datos
+        }
+        
+        if (keyEvent.getKeyCode() == KeyEvent.VK_G) {
+            //Guarda datos
+            try {
+                grabaArchivo();
+            } catch (IOException ex) {
+                Logger.getLogger(AppletExamen.class.getName()).log(Level.SEVERE,
+                        null, ex);
+            }
         }
     }
 }
