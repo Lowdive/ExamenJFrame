@@ -416,8 +416,9 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
                 }
                 String dato = fileIn.readLine();
                 while(dato != null) {  
-         
-         int iCorredores = Integer.parseInt(fileIn.readLine());
+         int iCorredores = Integer.parseInt(dato);
+         System.out.println("lo primero que lees es:");
+         System.out.println(iCorredores);
          for (int iK=1; iK <= iCorredores; iK++) {
             // se crea el personaje caminador
             Personaje perCorre;
@@ -428,7 +429,7 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
             perCorre.setVelocidad(Integer.parseInt(fileIn.readLine()));
             lnkCorredores.add(perCorre);
             }
-         
+         System.out.println("Salimos del For de Corredores");
          
          int iCaminadores = Integer.parseInt(fileIn.readLine());
          for (int iK=1; iK <= iCaminadores; iK++) {
@@ -441,16 +442,17 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
             perCamina.setVelocidad(Integer.parseInt(fileIn.readLine()));
             lnkCaminadores.add(perCamina);
             }
+                System.out.println("Salimos del For de Caminadores");
           
         perNena.setX(Integer.parseInt(fileIn.readLine()));
         perNena.setY(Integer.parseInt(fileIn.readLine()));
           iDireccionNena = (Integer.parseInt(fileIn.readLine()));
+          System.out.println("Llegamos al score y vidas");
           iScore = (Integer.parseInt(fileIn.readLine()));
           iVidas = (Integer.parseInt(fileIn.readLine()));
                 }
                 fileIn.close();
         }
-
     @Override
     public void keyTyped(KeyEvent ke) {
         //To change body of generated methods, choose Tools | Templates.
@@ -490,7 +492,8 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
             try {
                 leeArchivo(); //Carga datos
             } catch (IOException ex) {
-                Logger.getLogger(AppletExamen.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AppletExamen.class.getName()).log(Level.SEVERE,
+                        null, ex);
             }
         }
         
