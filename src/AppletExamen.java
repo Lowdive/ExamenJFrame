@@ -367,8 +367,8 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
             g.setColor(Color.red);
             Font fFont = new Font("Verdana", Font.BOLD, 18);
             g.setFont(fFont);
-            g.drawString("Quedan " + iVidas + " vidas!", 50, 50);
-            g.drawString("Score : " + iScore, 50, 30);
+            g.drawString("Quedan " + iVidas + " vidas!", 50, 80);
+            g.drawString("Score : " + iScore, 50, 50);
         }
         if (iVidas <= 0) {
 
@@ -380,8 +380,8 @@ public class AppletExamen extends JFrame implements Runnable, KeyListener {
             // Despliego la imagen
             g.drawImage(imaImagenGOver, 0, 0,
                     getWidth(), getHeight(), this);
-            g.drawString("Quedan " + iVidas + " vidas!", 50, 50);
-            g.drawString("Score : " + iScore, 50, 30);
+            g.drawString("Quedan " + iVidas + " vidas!", 50, 80);
+            g.drawString("Score : " + iScore, 50, 50);
         }
         if (bPausado) {
             g.drawImage(imaImagenPausa, (((getWidth() / 2)) 
